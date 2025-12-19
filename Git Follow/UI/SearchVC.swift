@@ -42,6 +42,8 @@ class SearchVC: UIViewController {
             followerListVC.userName = userNameTextField.text
             followerListVC.title = userNameTextField.text
             navigationController?.pushViewController(followerListVC, animated: true)
+        }else{
+            self.presentGFAlertOnMainThread(title: "Missing User Name", message: "You have not entered the user name 😊 ", buttonTitle: "Ok")
         }
     }
     
