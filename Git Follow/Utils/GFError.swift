@@ -1,0 +1,15 @@
+//
+//  ErrorMessages.swift
+//  Git Follow
+//
+//  Created by iOS Dev on 26/12/25.
+//
+
+enum GFError: String, Error {
+    case invalidRequest = "This user create an invalid request.Please try again."
+    case completionError = "Unable to complete you request.Please Check your connection and try again."
+    case fetchError = "Failed to fetch data. Please Try Again."
+    case nullDataError = "No Data recived from the server"
+    case parsingError = "Unable to decode the data please try again after some time."
+}
+ 
