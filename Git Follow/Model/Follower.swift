@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Follower: Codable {
+nonisolated struct Follower: Codable, Hashable {
     let login: String
-    let avatarUrl: String //codable convert snake-case to camel-case automatically
+    let avatarUrl: String
 }
