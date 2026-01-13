@@ -4,7 +4,7 @@
 //
 //  Created by iOS Dev on 26/12/25.
 //
-
+import UIKit
 import Foundation
 /**
  * its a singleton class
@@ -12,7 +12,8 @@ import Foundation
  */
 class NetworkManager {
     static let shared = NetworkManager()
-    let baseUrl = "https://api.github.com"
+    private let baseUrl = "https://api.github.com"
+    let cache = NSCache<NSString, UIImage>()
     
     private init() {}
     
@@ -21,7 +22,7 @@ class NetworkManager {
         page: Int,
         completion: @escaping (Result<[Follower], GFError>) -> Void
     ) {
-        let endpoint = baseUrl + "/users/\(username)/followers?page=\(page)" //can also add how many followers do we want to get using ?per_page = <value (int)>
+        let endpoint = baseUrl + "/users/\(username)/followers?page=\(page)&per_page=100" //can also add how many followers do we want to get using ?per_page = <value (int)>
         guard let url = URL(string: endpoint) else {
             completion(.failure(.invalidRequest))
             return
