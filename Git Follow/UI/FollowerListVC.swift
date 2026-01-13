@@ -29,7 +29,7 @@ class FollowerListVC: UIViewController {
     func configureCollectionView(){
         collectionView = UICollectionView(
             frame: view.bounds,
-            collectionViewLayout: createThreeColoumFlowLayout()
+            collectionViewLayout: UiHelper.createThreeColoumFlowLayout(in: view)
         )
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemBackground
@@ -40,26 +40,12 @@ class FollowerListVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    func createThreeColoumFlowLayout() -> UICollectionViewFlowLayout{
-        
-        let width = view.bounds.width
-        let padding: CGFloat = 12
-        let minimumItemSpacing: CGFloat = 10
-        let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
-        let itemWidth = availableWidth / 3
-        
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 40)
-        
-        return flowLayout
-    }
-    
     func getFollowers(){
         NetworkManager.shared.getFollowers(
             for: userName,
             page: 1,
-            completion: { result in
+            completion: { [weak self] result in
+                guard let self = self else {return}
                 switch(result){
                 case .failure(let error):
                     self.presentGFAlertOnMainThread(
