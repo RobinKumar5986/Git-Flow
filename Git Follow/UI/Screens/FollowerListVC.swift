@@ -14,11 +14,13 @@ class FollowerListVC: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
     
     var followers: [Follower] = []
+    var filteredFollowers: [Follower] = []
     var pageNumber: Int = 1
     var hasMoreFollower: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureSearchController()
         configureCollectionView()
         getFollowers(userName: userName,page: pageNumber)
         configureDataSource()
@@ -61,7 +63,7 @@ class FollowerListVC: UIViewController {
                     print("Success: Data fetched successfully")
                     if followers.count < 100 { hasMoreFollower = false }
                     self.followers.append(contentsOf: followers)
-                    self.updateData()
+                    self.updateData(on: self.followers)
                     if(self.followers.isEmpty) {
                         DispatchQueue.main.async {
                             let message = "This user dosn't have any Followers. Go Follow them 😊"
@@ -85,11 +87,22 @@ class FollowerListVC: UIViewController {
         }
     }
     
-    func updateData() {
+    func configureSearchController() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search for username"
+        navigationItem.searchController = searchController
+        searchController.searchBar.delegate = self
+//        searchController.obscuresBackgroundDuringPresentation = false //this can be used for remoing the slight background becomming dark.
+        
+    }
+    
+    func updateData(on followers: [Follower]) {
         var snapShot = NSDiffableDataSourceSnapshot<Section,Follower>()
         snapShot.appendSections([.main])
         snapShot.appendItems(followers)
         DispatchQueue.main.async {
+            
             self.dataSource.apply(snapShot,animatingDifferences: true)
         }
     }
@@ -106,5 +119,21 @@ extension FollowerListVC: UICollectionViewDelegate {
             pageNumber += 1
             getFollowers(userName: userName,page: pageNumber)
         }
+    }
+}
+
+
+extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else {
+            updateData(on: followers)
+            return
+        }
+        filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
+        updateData(on: filteredFollowers)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        updateData(on: followers)
     }
 }
