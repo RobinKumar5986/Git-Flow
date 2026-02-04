@@ -17,6 +17,7 @@ class FollowerListVC: UIViewController {
     var filteredFollowers: [Follower] = []
     var pageNumber: Int = 1
     var hasMoreFollower: Bool = true
+    var isSerching: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -102,7 +103,6 @@ class FollowerListVC: UIViewController {
         snapShot.appendSections([.main])
         snapShot.appendItems(followers)
         DispatchQueue.main.async {
-            
             self.dataSource.apply(snapShot,animatingDifferences: true)
         }
     }
@@ -120,6 +120,15 @@ extension FollowerListVC: UICollectionViewDelegate {
             getFollowers(userName: userName,page: pageNumber)
         }
     }
+    func collectionView( _ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath ) {
+        var follower: Follower = isSerching ? filteredFollowers[indexPath.item] : followers[indexPath.item]
+        let destVC = UserInfoVC()
+        destVC.userName = follower.login
+        
+        let navigationController = UINavigationController(rootViewController: destVC)
+        present(navigationController,animated: true)
+    }
+    
 }
 
 
@@ -127,13 +136,16 @@ extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text, !filter.isEmpty else {
             updateData(on: followers)
+            isSerching = false
             return
         }
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         updateData(on: filteredFollowers)
+        isSerching = true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         updateData(on: followers)
+        isSerching = false
     }
 }

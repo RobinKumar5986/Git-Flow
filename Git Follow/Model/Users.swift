@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Users: Codable {
+nonisolated struct Users: Codable {
     var login: String
     var avatarUrl: String
     var name: String?

@@ -1,9 +1,10 @@
 //
-//  ErrorMessages.swift
+//  GFError.swift
 //  Git Follow
 //
-//  Created by iOS Dev on 26/12/25.
+//  Created by iOS Dev on 04/02/26.
 //
+
 
 enum GFError: String, Error {
     case invalidRequest = "This user create an invalid request.Please try again."
@@ -12,4 +13,4 @@ enum GFError: String, Error {
     case nullDataError = "No Data recived from the server"
     case parsingError = "Unable to decode the data please try again after some time."
 }
- 
+
