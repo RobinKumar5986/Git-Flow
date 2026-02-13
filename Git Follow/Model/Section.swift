@@ -9,4 +9,5 @@ import Foundation
 
 nonisolated enum Section{
     case main
+    case notSoMain
 }
