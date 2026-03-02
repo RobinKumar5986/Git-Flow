@@ -45,8 +45,10 @@ class UserInfoVC: UIViewController {
                 )
             case .success(let user):
                 DispatchQueue.main.async {
-                    print(user as Any)
+//                    print(user as Any)
                     self.addChidVC(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+                    self.addChidVC(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
+                    self.addChidVC(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
                 }
             }
         })
@@ -68,8 +70,6 @@ class UserInfoVC: UIViewController {
             ])
         }
         headerView.backgroundColor = .systemBackground
-        itemViewOne.backgroundColor = .systemCyan
-        itemViewTwo.backgroundColor = .systemMint
         
        
         NSLayoutConstraint.activate([

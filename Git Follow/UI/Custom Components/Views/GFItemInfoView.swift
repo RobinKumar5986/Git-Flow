@@ -48,7 +48,7 @@ class GFItemInfoView: UIView {
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             titleLabel.heightAnchor.constraint(equalToConstant: 18),
             
-            countLable.topAnchor.constraint(equalToSystemSpacingBelow: symbolImageView.bottomAnchor,multiplier: 4),
+            countLable.topAnchor.constraint(equalTo: symbolImageView.bottomAnchor, constant: 4),
             countLable.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             countLable.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             countLable.heightAnchor.constraint(equalToConstant: 18)
