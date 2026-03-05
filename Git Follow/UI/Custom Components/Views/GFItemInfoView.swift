@@ -53,7 +53,6 @@ class GFItemInfoView: UIView {
             countLable.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             countLable.heightAnchor.constraint(equalToConstant: 18)
             
-            
         ])
         
     }

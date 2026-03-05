@@ -7,12 +7,18 @@
 
 import UIKit
 
+protocol UserInfoVCDelegate: AnyObject {
+    
+    func didTapGithubProfile()
+    func didTapGetFollowers()
+}
 class UserInfoVC: UIViewController {
     var userName: String!
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
     var itemViews: [UIView] = []
+    let dateLable = GFBodyLable(textAlignment: .center)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,13 +55,16 @@ class UserInfoVC: UIViewController {
                     self.addChidVC(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
                     self.addChidVC(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
                     self.addChidVC(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
+                    
+                    self.dateLable.text = "GitHub since \(user.createdAt.convertToMonthYearFormat())"
+                    
                 }
             }
         })
     }
     
     func layoutUI() {
-        itemViews = [headerView,itemViewOne,itemViewTwo]
+        itemViews = [headerView,itemViewOne,itemViewTwo,dateLable]
         
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
@@ -81,6 +90,9 @@ class UserInfoVC: UIViewController {
             
             itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor,constant: padding),
             itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
+            
+            dateLable.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor,constant: padding),
+            dateLable.heightAnchor.constraint(equalToConstant: 18)
         ])
     }
     
@@ -93,5 +105,15 @@ class UserInfoVC: UIViewController {
     
     @objc func dismissVC() {
         dismiss(animated: true)
+    }
+}
+
+extension UserInfoVC: UserInfoVCDelegate {
+    func didTapGithubProfile() {
+        //TODO: Show safari view controller
+    }
+
+    func didTapGetFollowers() {
+        //TODO: need to get the followers for this user
     }
 }

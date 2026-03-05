@@ -15,6 +15,12 @@ class GFItemInfoVC: UIViewController {
     let itemInfoViewTwo = GFItemInfoView()
     let actionButton = GFButton()
     
+    var deligate: UserInfoVCDelegate!
+    
+    init(user: Users) {
+        super.init(nibName: nil, bundle: nil)
+        self.user = user
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +29,6 @@ class GFItemInfoVC: UIViewController {
         layoutUI()
     }
 
-    init(user: Users) {
-        super.init(nibName: nil, bundle: nil)
-        self.user = user
-    }
-    
     func configureBackgroundView() {
         view.layer.cornerRadius = 18
         view.backgroundColor = .secondarySystemBackground
