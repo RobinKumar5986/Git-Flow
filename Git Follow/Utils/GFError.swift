@@ -12,5 +12,7 @@ enum GFError: String, Error {
     case fetchError = "Failed to fetch data. Please Try Again."
     case nullDataError = "No Data recived from the server"
     case parsingError = "Unable to decode the data please try again after some time."
+    case unableToFavorite = "There was an error favoriting this user. Please try again."
+    case alreadyExist = "The User already exists in the favorites list."
 }
 

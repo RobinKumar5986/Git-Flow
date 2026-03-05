@@ -34,6 +34,7 @@ class FollowerListVC: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
+    
     func configureCollectionView(){
         collectionView = UICollectionView(
             frame: view.bounds,
@@ -44,9 +45,17 @@ class FollowerListVC: UIViewController {
         collectionView.backgroundColor = .systemBackground
         collectionView.register(FollowerCell.self,forCellWithReuseIdentifier: FollowerCell.reuseId)
     }
+    
     func configureViewController(){
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+        let addButton = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(addButtonTapped)
+        )
+        addButton.tintColor = .systemGreen
+        navigationItem.rightBarButtonItem = addButton
     }
     
     func getFollowers(userName: String, page: Int = 1){
@@ -109,6 +118,10 @@ class FollowerListVC: UIViewController {
         DispatchQueue.main.async {
             self.dataSource.apply(snapShot,animatingDifferences: true)
         }
+    }
+    
+    @objc func addButtonTapped() {
+        print("add button tapped")
     }
 }
 
