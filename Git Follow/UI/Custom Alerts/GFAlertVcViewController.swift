@@ -11,9 +11,9 @@ import UIKit
 class GFAlertVcViewController: UIViewController {
     
     let containerView: UIView = UIView()
-    let titleLabel: UILabel = GFTitleLable(textAlignment: .center, fontSize: 20)
-    let messageLabel: UILabel = GFBodyLable(textAlignment: .center)
-    let actionButton: UIButton = GFButton(backgroundColor: .systemRed , title: "Ok")
+    let titleLabel = GFTitleLable(textAlignment: .center, fontSize: 20)
+    let messageLabel = GFBodyLable(textAlignment: .center)
+    let actionButton = GFButton(backgroundColor: .systemRed , title: "Ok")
     
     var alertTitle: String?
     var message: String?
@@ -54,6 +54,7 @@ class GFAlertVcViewController: UIViewController {
     func configureTitleLabel() {
         containerView.addSubview(titleLabel)
         titleLabel.text = alertTitle ?? "Something Went Wrong"
+        actionButton.set(backgroundColor: .systemRed, title: buttonTitle ?? "Ok")
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: padding),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
